@@ -61,8 +61,12 @@ class Trigger(object):
     def _prepare_json_body(self):
         if self.name is None:
             raise ValueError("Trigger 'name' cannot be None")
-        return {'sessionId':self.session_id, 'trigger':self.name,
-                'parameters': self.parameters}
+        if self.parameters:
+            return {'sessionId':self.session_id, 'trigger':self.name,
+                    'parameters': self.parameters}
+        else:
+            return {'sessionId':self.session_id, 'trigger':self.name}
+
 
     def getresponse(self):
         """
@@ -71,4 +75,3 @@ class Trigger(object):
         response = requests.post(self.base_url, headers=self._prepare_headers(),\
                                 json=self._prepare_json_body())
         return response
-

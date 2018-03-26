@@ -62,8 +62,13 @@ class Message(object):
                 'Authorization': Authorization}
 
     def _prepare_json_body(self):
-        return {'sessionId':self.session_id, 'query':self.query,
-                'parameters': self.parameters}
+        if self.query is None:
+            raise ValueError("query cannot be None")
+        if self.parameters:
+            return {'sessionId':self.session_id, 'query':self.query,
+                    'parameters': self.parameters}
+        else:
+            return {'sessionId':self.session_id, 'query':self.query}
 
     def getresponse(self):
         """
@@ -72,4 +77,3 @@ class Message(object):
         response = requests.post(self.base_url, headers=self._prepare_headers(),\
                                 json=self._prepare_json_body())
         return response
-
