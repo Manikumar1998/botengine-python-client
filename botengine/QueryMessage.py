@@ -21,6 +21,21 @@ class Message(object):
     def query(self, query):
         self._query = query
 
+
+    @property
+    def parameters(self):
+        """
+            parameters dict
+            Default equal {}, Optional field
+        """
+        return self._parameters
+
+    @parameters.setter
+    def parameters(self, parameters):
+        if type(parameters) is not dict:
+            raise TypeError('parameters should be a dict')
+        self._parameters = parameters
+
     @property
     def developer_access_token(self):
         """
@@ -36,6 +51,7 @@ class Message(object):
 
     def __init__(self, developer_access_token, base_url, session_id):
         self.query = None
+        self.parameters = {}
         self.developer_access_token = developer_access_token
         self.base_url = base_url
         self.session_id = session_id
@@ -46,7 +62,8 @@ class Message(object):
                 'Authorization': Authorization}
 
     def _prepare_json_body(self):
-        return {'sessionId':self.session_id, 'query':self.query}
+        return {'sessionId':self.session_id, 'query':self.query,
+                'parameters': self.parameters}
 
     def getresponse(self):
         """
@@ -55,3 +72,4 @@ class Message(object):
         response = requests.post(self.base_url, headers=self._prepare_headers(),\
                                 json=self._prepare_json_body())
         return response
+

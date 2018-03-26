@@ -27,6 +27,20 @@ class Trigger(object):
         """
         return self._developer_access_token
 
+    @property
+    def parameters(self):
+        """
+            parameters dict
+            Default equal {}, Optional field
+        """
+        return self._parameters
+
+    @parameters.setter
+    def parameters(self, parameters):
+        if type(parameters) is not dict:
+            raise TypeError('parameters should be a dict')
+        self._parameters = parameters
+
     @developer_access_token.setter
     def developer_access_token(self, developer_access_token):
         self._developer_access_token = developer_access_token
@@ -34,6 +48,7 @@ class Trigger(object):
 
     def __init__(self, developer_access_token, base_url, session_id):
         self.name = None
+        self.parameters = {}
         self.developer_access_token = developer_access_token
         self.base_url = base_url
         self.session_id = session_id
@@ -46,8 +61,8 @@ class Trigger(object):
     def _prepare_json_body(self):
         if self.name is None:
             raise ValueError("Trigger 'name' cannot be None")
-        return {'sessionId':self.session_id, 'trigger':self.name}
-
+        return {'sessionId':self.session_id, 'trigger':self.name,
+                'parameters': self.parameters}
 
     def getresponse(self):
         """
@@ -56,3 +71,4 @@ class Trigger(object):
         response = requests.post(self.base_url, headers=self._prepare_headers(),\
                                 json=self._prepare_json_body())
         return response
+
