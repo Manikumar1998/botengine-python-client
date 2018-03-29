@@ -1,9 +1,9 @@
-# Botengine.ai Python SDK
+# Botengine.ai Python SDK (beta)
 
 Overview
 --------
 
-The botengine.ai Python SDK makes it easy to communicate with the botengine agent
+The botengine.ai Python SDK makes it easy to communicate with the botengine agent (only supports text responses)
 
 Prerequsites
 --------
@@ -23,7 +23,7 @@ Create an agent at [Botengine.ai](https://www.botengine.ai/) and get the develop
     >>> response = request.getresponse()
     ...
 
--Invoking a trigger (beta)
+-Invoking a trigger
 
     >>> from botengine import BotEngine
     >>> botai = BotEngine(<DEVELOPER_ACCESS_TOKEN>)
