@@ -3,7 +3,7 @@
 Overview
 --------
 
-The botengine.ai Python SDK makes it easy to communicate with the botengine agent (only supports text responses)
+The botengine.ai Python SDK makes it easy to communicate with the botengine agent
 
 Prerequsites
 --------
